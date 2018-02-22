@@ -5,7 +5,6 @@
 #include <iostream>
 #include <cmath>
 #include "utilities.hpp"
-#include <boost/numeric/ublas/lu.hpp>
 
 class SolverType
 {
@@ -14,15 +13,15 @@ public:
 	SolverType(const SolverType &_rhs);
 	~SolverType(void);
 	SolverType & operator=(const SolverType &_rhs);
+	void initialize(void);
 	void solve(void);
 	Real q0(void) const;
-	void q1(Real _q1);
 	Real q1(void) const;
-	void q2(Real _q2);
 	Real q2(void) const;
 	Real A0(void) const;
 	Real A1(void) const;
 	Real A2(void) const;
+	void a(Real _a);
 	Real a(void) const;
 	Real R(void) const;
 	Real h(void) const;
