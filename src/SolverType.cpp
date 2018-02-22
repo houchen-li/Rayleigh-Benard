@@ -53,12 +53,19 @@ void SolverType::solve(void)
 		
 		data_[0] = std::sqrt(-data_[1]*data_[1] + data_[2]*data_[2] + 2.0*std::sqrt(3.0)*data_[1]*data_[2]);
 
-		b1 = -std::cos(data_[0]/2.0);
+		/*b1 = -std::cos(data_[0]/2.0);
 		b2 = data_[0]*std::sin(data_[0]/2.0);
 		a11 = std::cosh(data_[1]/2.0)*std::cos(data_[2]/2.0);
 		a12 = std::sinh(data_[1]/2.0)*std::sin(data_[2]/2.0);
 		a21 = data_[1]*std::sinh(data_[1]/2.0)*std::cos(data_[2]/2.0)-data_[2]*std::cosh(data_[1]/2.0)*std::sin(data_[2]/2.0);
-		a22 = data_[1]*std::cosh(data_[1]/2.0)*std::sin(data_[2]/2.0)+data_[2]*std::sinh(data_[1]/2.0)*std::cos(data_[2]/2.0);
+		a22 = data_[1]*std::cosh(data_[1]/2.0)*std::sin(data_[2]/2.0)+data_[2]*std::sinh(data_[1]/2.0)*std::cos(data_[2]/2.0);*/
+
+		b1 = -std::sin(data_[0]/2.0);
+		b2 = -data_[0]*std::cos(data_[0]/2.0);
+		a11 = std::cosh(data_[1]/2.0)*std::sin(data_[2]/2.0);
+		a12 = std::sinh(data_[1]/2.0)*std::cos(data_[2]/2.0);
+		a21 = data_[1]*std::sinh(data_[1]/2.0)*std::sin(data_[2]/2.0)+data_[2]*std::cosh(data_[1]/2.0)*std::cos(data_[2]/2.0);
+		a22 = data_[1]*std::cosh(data_[1]/2.0)*std::cos(data_[2]/2.0)-data_[2]*std::sinh(data_[1]/2.0)*std::sin(data_[2]/2.0);
 	
 		data_[3] = 1.0;
 		data_[4] = (a22*b1-a12*b2)/(a11*a22-a12*a21);
@@ -157,6 +164,8 @@ std::ostream & operator<<(std::ostream &_os, const SolverType &_obj)
 Real SolverType::f(Real _q1, Real _q2)
 {
 	Real q0 = std::sqrt(-_q1*_q1 + _q2*_q2 + 2.0*std::sqrt(3.0)*_q1*_q2);
-	return ((_q1+std::sqrt(3.0)*_q2)*std::sinh(_q1)+(std::sqrt(3.0)*_q1-_q2)*std::sin(_q2))/(std::cosh(_q1)+std::cos(_q2))+q0*std::tan(q0/2.0);
-	//return ((_q1+std::sqrt(3.0)*_q2)*std::sinh(_q1)-(std::sqrt(3.0)*_q1-_q2)*std::sin(_q2))/(std::cosh(_q1)-std::cos(_q2))-q0/std::tan(q0/2);
+	//return ((_q1+std::sqrt(3.0)*_q2)*std::sinh(_q1)+(std::sqrt(3.0)*_q1-_q2)*std::sin(_q2))/(std::cosh(_q1)+std::cos(_q2))+q0*std::tan(q0/2.0);
+	//return ((_q1+std::sqrt(3.0)*_q2)*std::sinh(_q1)-(std::sqrt(3.0)*_q1-_q2)*std::sin(_q2))/(std::cosh(_q1)-std::cos(_q2))-q0/std::tan(q0/2.0);
+	//return (_q1*_q1+_q2*_q2)*(std::cosh(_q1)-std::cos(_q2))/((_q1-std::sqrt(3.0)*_q2)*std::sinh(_q1)-(std::sqrt(3.0)*_q1+_q2)*std::sin(_q2))+q0*std::tan(q0/2.0);
+	return std::sqrt(3.0)*(_q1*_q1+_q2*_q2)*(std::cosh(_q1)+std::cos(_q2))/((std::sqrt(3.0)*_q1-_q2)*std::sinh(_q1)+(_q1+std::sqrt(3.0)*_q2)*std::sin(_q2))-q0/std::tan(q0/2.0);
 };

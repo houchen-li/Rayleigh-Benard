@@ -4,7 +4,8 @@
 
 #include <iostream>
 #include <cmath>
-#include "utilities.hpp"
+#include <cstdlib>
+#include "def.h"
 
 class SolverType
 {
@@ -13,7 +14,6 @@ public:
 	SolverType(const SolverType &_rhs);
 	~SolverType(void);
 	SolverType & operator=(const SolverType &_rhs);
-	void initialize(void);
 	void solve(void);
 	Real q0(void) const;
 	Real q1(void) const;
@@ -30,6 +30,7 @@ public:
 	void tol(Real _tol);
 	friend std::ostream & operator<<(std::ostream &_os, const SolverType &_obj);
 private:
+	void initialize(void);
 	Real f(Real _q1, Real _q2);
 	Real data_[10];
 	Bool solved_flag_;

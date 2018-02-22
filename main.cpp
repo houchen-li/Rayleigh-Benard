@@ -1,21 +1,54 @@
 #include <ctime>
-#include <cstdlib>
-#include "include/utilities.hpp"
+#include <boost/program_options.hpp>
+#include <exception>
+#include "include/def.h"
+#include "include/utils.h"
 #include "include/SolverType.h"
 
-int main(int argc, char *argv[])
-{	
-	SolverType s;
-	std::srand(std::time(nullptr));
-	Real r = std::sqrt(3.0)+2.0*(Real)std::rand()/(Real)RAND_MAX;
+void parseArgv(int _argc, char *_argv[], Real &_new_a);
 
-	Real a = 4, c = a/std::sqrt(r*r-1.0-2.0/std::sqrt(3.0)*r), h = 1e-8, tol = 1e-6;
-	Real q1 = c*r, q2 = c;
-	s.q1(q1);
-	s.q2(q2);
-	s.h(h);
-	s.tol(tol);
+int main(int argc, char *argv[])
+{
+	Real new_a, new_h = 1e-10, new_tol = 1e-12;
+	SolverType s;
+
+	printLine('*');
+	std::srand(std::time(0));
+	try {
+		parseArgv(argc, argv, new_a);
+	} catch (std::exception &e) {
+		printLine('*');
+		return 1;
+	}
+	s.a(new_a);
+	s.h(new_h);
+	s.tol(new_tol);
 	s.solve();
 	std::cout << s << std::endl;
+	printLine('*');
+
 	return 0;
+}
+
+void parseArgv(int _argc, char *_argv[], Real &_new_a)
+{
+	boost::program_options::options_description desc("This program is used to calculate the eigen pertubation modes of Rayleigh-Benard system.\nThe allowed options are:");
+	desc.add_options()
+		("help,h", "produce help message")
+		("mode,a", boost::program_options::value<Real>(&_new_a), "mode number")
+	;
+
+	boost::program_options::variables_map vm;
+	boost::program_options::store(boost::program_options::parse_command_line(_argc, _argv, desc), vm);
+	boost::program_options::notify(vm);
+
+	if (vm.count("help")) {
+		std::cout << desc;
+		throw std::invalid_argument("help");
+	}
+
+	if (!vm.count("mode")) {
+		std::cerr << "The mode number a hasn't been set.\n";
+		throw std::invalid_argument("mode");
+	}
 }

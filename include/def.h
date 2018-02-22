@@ -1,6 +1,6 @@
 #pragma once
-#ifndef __UTILITIES_HPP__
-#define __UTILITIES_HPP__
+#ifndef __DEF_HPP__
+#define __DEF_HPP__
 
 #include <string>
 
