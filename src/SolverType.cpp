@@ -40,13 +40,14 @@ void Rayleigh_Benard::SolverType::solve(const Rayleigh_Benard::ModeType &e)
 				initialize();
 				for (i = 0; i < 20; i++) {
 					b1 = -chandrasekhar_even(data_[1], data_[2]);
-					if (std::abs(b1) < data_[9]) break;
-					a11 = (chandrasekhar_even(data_[1]+data_[8], data_[2])-chandrasekhar_even(data_[1]-data_[8], data_[2]))/(2.0*data_[8]);
-					a12 = (chandrasekhar_even(data_[1], data_[2]+data_[8])-chandrasekhar_even(data_[1], data_[2]-data_[8]))/(2.0*data_[8]);
-					a21 = data_[1]-data_[2]/std::sqrt(3.0);
-					a22 = -data_[2]-data_[1]/std::sqrt(3.0);
-					data_[1] += a22*b1/(a11*a22-a12*a21);
-					data_[2] += -a21*b1/(a11*a22-a12*a21);
+					b2 = -data_[1]*data_[1]+data_[2]*data_[2]+2.0/std::sqrt(3.0)*data_[1]*data_[2]+data_[6]*data_[6];
+					if (std::sqrt(b1*b1+b2*b2) < data_[9]) break;
+					a11 = (-chandrasekhar_even(data_[1]+2.0*data_[8], data_[2])+8.0*chandrasekhar_even(data_[1]+data_[8], data_[2])-8.0*chandrasekhar_even(data_[1]-data_[8], data_[2])+chandrasekhar_even(data_[1]-2.0*data_[8], data_[2]))/(12.0*data_[8]);
+					a12 = (-chandrasekhar_even(data_[1], data_[2]+2.0*data_[8])+8.0*chandrasekhar_even(data_[1], data_[2]+data_[8])-8.0*chandrasekhar_even(data_[1], data_[2]-data_[8])+chandrasekhar_even(data_[1], data_[2]-2.0*data_[8]))/(12.0*data_[8]);
+					a21 = 2.0*(data_[1]-data_[2]/std::sqrt(3.0));
+					a22 = 2.0*(-data_[2]-data_[1]/std::sqrt(3.0));
+					data_[1] += (a22*b1-a12*b2)/(a11*a22-a12*a21);
+					data_[2] += (a11*b2-a21*b1)/(a11*a22-a12*a21);
 				}
 			} while (i == 20);
 			data_[0] = std::sqrt(-data_[1]*data_[1] + data_[2]*data_[2] + 2.0*std::sqrt(3.0)*data_[1]*data_[2]);
@@ -63,13 +64,14 @@ void Rayleigh_Benard::SolverType::solve(const Rayleigh_Benard::ModeType &e)
 				initialize();
 				for (i = 0; i < 20; i++) {
 					b1 = -chandrasekhar_odd(data_[1], data_[2]);
-					if (std::abs(b1) < data_[9]) break;
-					a11 = (chandrasekhar_odd(data_[1]+data_[8], data_[2])-chandrasekhar_odd(data_[1]-data_[8], data_[2]))/(2.0*data_[8]);
-					a12 = (chandrasekhar_odd(data_[1], data_[2]+data_[8])-chandrasekhar_odd(data_[1], data_[2]-data_[8]))/(2.0*data_[8]);
-					a21 = data_[1]-data_[2]/std::sqrt(3.0);
-					a22 = -data_[2]-data_[1]/std::sqrt(3.0);
-					data_[1] += a22*b1/(a11*a22-a12*a21);
-					data_[2] += -a21*b1/(a11*a22-a12*a21);
+					b2 = -data_[1]*data_[1]+data_[2]*data_[2]+2.0/std::sqrt(3.0)*data_[1]*data_[2]+data_[6]*data_[6];
+					if (std::sqrt(b1*b1+b2*b2) < data_[9]) break;
+					a11 = (-chandrasekhar_odd(data_[1]+2.0*data_[8], data_[2])+8.0*chandrasekhar_odd(data_[1]+data_[8], data_[2])-8.0*chandrasekhar_odd(data_[1]-data_[8], data_[2])+chandrasekhar_odd(data_[1]-2.0*data_[8], data_[2]))/(12.0*data_[8]);
+					a12 = (-chandrasekhar_odd(data_[1], data_[2]+2.0*data_[8])+8.0*chandrasekhar_odd(data_[1], data_[2]+data_[8])-8.0*chandrasekhar_odd(data_[1], data_[2]-data_[8])+chandrasekhar_odd(data_[1], data_[2]-2.0*data_[8]))/(12.0*data_[8]);
+					a21 = 2.0*(data_[1]-data_[2]/std::sqrt(3.0));
+					a22 = 2.0*(-data_[2]-data_[1]/std::sqrt(3.0));
+					data_[1] += (a22*b1-a12*b2)/(a11*a22-a12*a21);
+					data_[2] += (a11*b2-a21*b1)/(a11*a22-a12*a21);
 				}
 			} while (i == 20);
 			data_[0] = std::sqrt(-data_[1]*data_[1] + data_[2]*data_[2] + 2.0*std::sqrt(3.0)*data_[1]*data_[2]);
@@ -86,13 +88,14 @@ void Rayleigh_Benard::SolverType::solve(const Rayleigh_Benard::ModeType &e)
 				initialize();
 				for (i = 0; i < 20; i++) {
 					b1 = -hurle_even(data_[1], data_[2]);
-					if (std::abs(b1) < data_[9]) break;
-					a11 = (hurle_even(data_[1]+data_[8], data_[2])-hurle_even(data_[1]-data_[8], data_[2]))/(2.0*data_[8]);
-					a12 = (hurle_even(data_[1], data_[2]+data_[8])-hurle_even(data_[1], data_[2]-data_[8]))/(2.0*data_[8]);
-					a21 = data_[1]-data_[2]/std::sqrt(3.0);
-					a22 = -data_[2]-data_[1]/std::sqrt(3.0);
-					data_[1] += a22*b1/(a11*a22-a12*a21);
-					data_[2] += -a21*b1/(a11*a22-a12*a21);
+					b2 = -data_[1]*data_[1]+data_[2]*data_[2]+2.0/std::sqrt(3.0)*data_[1]*data_[2]+data_[6]*data_[6];
+					if (std::sqrt(b1*b1+b2*b2) < data_[9]) break;
+					a11 = (-hurle_even(data_[1]+2.0*data_[8], data_[2])+8.0*hurle_even(data_[1]+data_[8], data_[2])-8.0*hurle_even(data_[1]-data_[8], data_[2])+hurle_even(data_[1]-2.0*data_[8], data_[2]))/(12.0*data_[8]);
+					a12 = (-hurle_even(data_[1], data_[2]+2.0*data_[8])+8.0*hurle_even(data_[1], data_[2]+data_[8])-8.0*hurle_even(data_[1], data_[2]-data_[8])+hurle_even(data_[1], data_[2]-2.0*data_[8]))/(12.0*data_[8]);
+					a21 = 2.0*(data_[1]-data_[2]/std::sqrt(3.0));
+					a22 = 2.0*(-data_[2]-data_[1]/std::sqrt(3.0));
+					data_[1] += (a22*b1-a12*b2)/(a11*a22-a12*a21);
+					data_[2] += (a11*b2-a21*b1)/(a11*a22-a12*a21);
 				}
 			} while (i == 20);
 			data_[0] = std::sqrt(-data_[1]*data_[1] + data_[2]*data_[2] + 2.0*std::sqrt(3.0)*data_[1]*data_[2]);
@@ -109,13 +112,14 @@ void Rayleigh_Benard::SolverType::solve(const Rayleigh_Benard::ModeType &e)
 				initialize();
 				for (i = 0; i < 20; i++) {
 					b1 = -hurle_odd(data_[1], data_[2]);
-					if (std::abs(b1) < data_[9]) break;
-					a11 = (hurle_odd(data_[1]+data_[8], data_[2])-hurle_odd(data_[1]-data_[8], data_[2]))/(2.0*data_[8]);
-					a12 = (hurle_odd(data_[1], data_[2]+data_[8])-hurle_odd(data_[1], data_[2]-data_[8]))/(2.0*data_[8]);
-					a21 = data_[1]-data_[2]/std::sqrt(3.0);
-					a22 = -data_[2]-data_[1]/std::sqrt(3.0);
-					data_[1] += a22*b1/(a11*a22-a12*a21);
-					data_[2] += -a21*b1/(a11*a22-a12*a21);
+					b2 = -data_[1]*data_[1]+data_[2]*data_[2]+2.0/std::sqrt(3.0)*data_[1]*data_[2]+data_[6]*data_[6];
+					if (std::sqrt(b1*b1+b2*b2) < data_[9]) break;
+					a11 = (-hurle_odd(data_[1]+2.0*data_[8], data_[2])+8.0*hurle_odd(data_[1]+data_[8], data_[2])-8.0*hurle_odd(data_[1]-data_[8], data_[2])+hurle_odd(data_[1]-2.0*data_[8], data_[2]))/(12.0*data_[8]);
+					a12 = (-hurle_odd(data_[1], data_[2]+2.0*data_[8])+8.0*hurle_odd(data_[1], data_[2]+data_[8])-8.0*hurle_odd(data_[1], data_[2]-data_[8])+hurle_odd(data_[1], data_[2]-2.0*data_[8]))/(12.0*data_[8]);
+					a21 = 2.0*(data_[1]-data_[2]/std::sqrt(3.0));
+					a22 = 2.0*(-data_[2]-data_[1]/std::sqrt(3.0));
+					data_[1] += (a22*b1-a12*b2)/(a11*a22-a12*a21);
+					data_[2] += (a11*b2-a21*b1)/(a11*a22-a12*a21);
 				}
 			} while (i == 20);
 			data_[0] = std::sqrt(-data_[1]*data_[1] + data_[2]*data_[2] + 2.0*std::sqrt(3.0)*data_[1]*data_[2]);

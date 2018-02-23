@@ -1,15 +1,15 @@
 #include <ctime>
 #include <boost/program_options.hpp>
 #include <exception>
-#include "include/def.h"
-#include "include/utils.h"
-#include "include/SolverType.h"
+#include "../include/def.h"
+#include "../include/utils.h"
+#include "../include/SolverType.h"
 
 void parseArgv(int _argc, char *_argv[], Real &_new_a);
 
 int main(int argc, char *argv[])
 {
-	Real new_a, new_h = 1e-4, new_tol = 1e-8;
+	Real new_a, new_h = 1e-6, new_tol = 1e-8;
 	Rayleigh_Benard::SolverType s;
 
 	printLine('*');
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 	s.a(new_a);
 	s.h(new_h);
 	s.tol(new_tol);
-	s.solve(Rayleigh_Benard::hurle_odd);
+	s.solve(Rayleigh_Benard::hurle_even);
 	std::cout << s << std::endl;
 	printLine('*');
 
