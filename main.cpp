@@ -9,8 +9,8 @@ void parseArgv(int _argc, char *_argv[], Real &_new_a);
 
 int main(int argc, char *argv[])
 {
-	Real new_a, new_h = 1e-10, new_tol = 1e-12;
-	SolverType s;
+	Real new_a, new_h = 1e-4, new_tol = 1e-8;
+	Rayleigh_Benard::SolverType s;
 
 	printLine('*');
 	std::srand(std::time(0));
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 	s.a(new_a);
 	s.h(new_h);
 	s.tol(new_tol);
-	s.solve();
+	s.solve(Rayleigh_Benard::hurle_odd);
 	std::cout << s << std::endl;
 	printLine('*');
 
