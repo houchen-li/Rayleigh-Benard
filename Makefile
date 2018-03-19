@@ -1,7 +1,13 @@
 CXX=icpc
 CFLAGS=-O3
 
-all: bin/Rayleigh-Benard-chandrasekhar-even bin/Rayleigh-Benard-chandrasekhar-odd bin/Rayleigh-Benard-hurle-even programs/Rayleigh-Benard-hurle-odd
+all: bin/Rayleigh-Benard-chandrasekhar-even bin/Rayleigh-Benard-chandrasekhar-odd bin/Rayleigh-Benard-hurle-even bin/Rayleigh-Benard-hurle-odd bin/chandrasekhar_even_find bin/chandrasekhar_odd_find
+
+bin/chandrasekhar_even_find: programs/chandrasekhar_even_find.cpp obj/def.o obj/utils.o obj/SolverType.o
+	$(CXX) -o bin/chandrasekhar_even_find obj/def.o obj/utils.o obj/SolverType.o programs/chandrasekhar_even_find.cpp -lm -lboost_program_options -O3
+
+bin/chandrasekhar_odd_find: programs/chandrasekhar_odd_find.cpp obj/def.o obj/utils.o obj/SolverType.o
+	$(CXX) -o bin/chandrasekhar_odd_find obj/def.o obj/utils.o obj/SolverType.o programs/chandrasekhar_odd_find.cpp -lm -lboost_program_options -O3
 
 bin/Rayleigh-Benard-chandrasekhar-even: programs/Rayleigh-Benard-chandrasekhar-even.cpp obj/def.o obj/utils.o obj/SolverType.o
 	$(CXX) -o bin/Rayleigh-Benard-chandrasekhar-even obj/def.o obj/utils.o obj/SolverType.o programs/Rayleigh-Benard-chandrasekhar-even.cpp -lm -lboost_program_options -O3
@@ -12,7 +18,7 @@ bin/Rayleigh-Benard-chandrasekhar-odd: programs/Rayleigh-Benard-chandrasekhar-od
 bin/Rayleigh-Benard-hurle-even: programs/Rayleigh-Benard-hurle-even.cpp obj/def.o obj/utils.o obj/SolverType.o
 	$(CXX) -o bin/Rayleigh-Benard-hurle-even obj/def.o obj/utils.o obj/SolverType.o programs/Rayleigh-Benard-hurle-even.cpp -lm -lboost_program_options -O3
 
-programs/Rayleigh-Benard-hurle-odd: programs/Rayleigh-Benard-hurle-odd.cpp obj/def.o obj/utils.o obj/SolverType.o
+bin/Rayleigh-Benard-hurle-odd: programs/Rayleigh-Benard-hurle-odd.cpp obj/def.o obj/utils.o obj/SolverType.o
 	$(CXX) -o bin/Rayleigh-Benard-hurle-odd obj/def.o obj/utils.o obj/SolverType.o programs/Rayleigh-Benard-hurle-odd.cpp -lm -lboost_program_options -O3
 
 obj/def.o: src/def.cpp include/def.h

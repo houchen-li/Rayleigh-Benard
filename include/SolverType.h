@@ -17,15 +17,18 @@ namespace Rayleigh_Benard{
 		~SolverType(void);
 		SolverType & operator=(const SolverType &_rhs);
 		void solve(const ModeType &e);
+		void a(Real _a);
+		Real a(void) const;
+		Real R(void) const;
 		Real q0(void) const;
 		Real q1(void) const;
 		Real q2(void) const;
 		Real A0(void) const;
 		Real A1(void) const;
 		Real A2(void) const;
-		void a(Real _a);
-		Real a(void) const;
-		Real R(void) const;
+		Real B1(void) const;
+		Real B2(void) const;
+		Real B3(void) const;	
 		Real h(void) const;
 		void h(Real _h);
 		Real tol(void) const;
@@ -37,7 +40,7 @@ namespace Rayleigh_Benard{
 		Real chandrasekhar_odd(Real _q1, Real _q2);
 		Real hurle_even(Real _q1, Real _q2);
 		Real hurle_odd(Real _q1, Real _q2);
-		Real data_[10];
+		Real data_[13];
 	};
 	std::ostream & operator<<(std::ostream &_os, const SolverType &_obj);
 }
