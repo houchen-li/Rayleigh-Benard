@@ -8,7 +8,7 @@
 #include "def.h"
 
 namespace Rayleigh_Benard{
-	typedef enum{chandrasekhar_even, chandrasekhar_odd, hurle_even, hurle_odd} ModeType;
+	typedef enum{rigid_temp_even, rigid_heat_even, free_heat_even} ModeType;
 	class SolverType
 	{
 	public:
@@ -26,9 +26,6 @@ namespace Rayleigh_Benard{
 		Real A0(void) const;
 		Real A1(void) const;
 		Real A2(void) const;
-		Real B1(void) const;
-		Real B2(void) const;
-		Real B3(void) const;	
 		Real h(void) const;
 		void h(Real _h);
 		Real tol(void) const;
@@ -36,11 +33,10 @@ namespace Rayleigh_Benard{
 		friend std::ostream & operator<<(std::ostream &_os, const SolverType &_obj);
 	private:
 		void initialize(void);
-		Real chandrasekhar_even(Real _q1, Real _q2);
-		Real chandrasekhar_odd(Real _q1, Real _q2);
-		Real hurle_even(Real _q1, Real _q2);
-		Real hurle_odd(Real _q1, Real _q2);
-		Real data_[13];
+		static Real rigid_temp_even(Real _q1, Real _q2);
+		static Real rigid_heat_even(Real _q1, Real _q2);
+		static Real free_heat_even(Real _q1, Real _q2);
+		Real data_[10];
 	};
 	std::ostream & operator<<(std::ostream &_os, const SolverType &_obj);
 }

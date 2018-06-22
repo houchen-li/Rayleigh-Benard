@@ -29,8 +29,8 @@ int main(void)
 		s.a(a);
 		s.h(1e-6);
 		s.tol(1e-8);
-		s.solve(Rayleigh_Benard::chandrasekhar_odd);
-	} while (s.R() > 200000.0);
+		s.solve(Rayleigh_Benard::rigid_temp_even);
+	} while (s.R() > 8000.0);
 
 	std::cout << s << std::endl;
 	printLine('*');
@@ -45,8 +45,8 @@ Real genR(Real _a)
 		s.a(_a);
 		s.h(1e-6);
 		s.tol(1e-8);
-		s.solve(Rayleigh_Benard::chandrasekhar_odd);
-	} while (s.R() > 200000.0);
+		s.solve(Rayleigh_Benard::rigid_temp_even);
+	} while (s.R() > 8000.0);
 	return s.R();
 }
 

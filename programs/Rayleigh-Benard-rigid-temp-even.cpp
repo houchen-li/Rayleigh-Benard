@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 	s.a(new_a);
 	s.h(new_h);
 	s.tol(new_tol);
-	s.solve(Rayleigh_Benard::hurle_odd);
+	s.solve(Rayleigh_Benard::rigid_temp_even);
 	std::cout << s << std::endl;
 	printLine('*');
 
