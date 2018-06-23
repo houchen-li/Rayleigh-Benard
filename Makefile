@@ -1,25 +1,16 @@
 CXX=icpc
 CFLAGS=-O3
 
-all: bin/Rayleigh-Benard-chandrasekhar-even bin/Rayleigh-Benard-chandrasekhar-odd bin/Rayleigh-Benard-hurle-even bin/Rayleigh-Benard-hurle-odd bin/chandrasekhar_even_find bin/chandrasekhar_odd_find
+all: bin/rigid-temp-even bin/rigid-heat-even bin/free-heat-even
 
-bin/chandrasekhar_even_find: programs/chandrasekhar_even_find.cpp obj/def.o obj/utils.o obj/SolverType.o
-	$(CXX) -o bin/chandrasekhar_even_find obj/def.o obj/utils.o obj/SolverType.o programs/chandrasekhar_even_find.cpp -lm -lboost_program_options -O3
+bin/rigid-temp-even: programs/rigid-temp-even.cpp obj/def.o obj/utils.o obj/SolverType.o
+	$(CXX) -o bin/rigid-temp-even obj/def.o obj/utils.o obj/SolverType.o programs/rigid-temp-even.cpp -lm -lboost_program_options -O3
 
-bin/chandrasekhar_odd_find: programs/chandrasekhar_odd_find.cpp obj/def.o obj/utils.o obj/SolverType.o
-	$(CXX) -o bin/chandrasekhar_odd_find obj/def.o obj/utils.o obj/SolverType.o programs/chandrasekhar_odd_find.cpp -lm -lboost_program_options -O3
+bin/rigid-heat-even: programs/rigid-heat-even.cpp obj/def.o obj/utils.o obj/SolverType.o
+	$(CXX) -o bin/rigid-heat-even obj/def.o obj/utils.o obj/SolverType.o programs/rigid-heat-even.cpp -lm -lboost_program_options -O3
 
-bin/Rayleigh-Benard-chandrasekhar-even: programs/Rayleigh-Benard-chandrasekhar-even.cpp obj/def.o obj/utils.o obj/SolverType.o
-	$(CXX) -o bin/Rayleigh-Benard-chandrasekhar-even obj/def.o obj/utils.o obj/SolverType.o programs/Rayleigh-Benard-chandrasekhar-even.cpp -lm -lboost_program_options -O3
-
-bin/Rayleigh-Benard-chandrasekhar-odd: programs/Rayleigh-Benard-chandrasekhar-odd.cpp obj/def.o obj/utils.o obj/SolverType.o
-	$(CXX) -o bin/Rayleigh-Benard-chandrasekhar-odd obj/def.o obj/utils.o obj/SolverType.o programs/Rayleigh-Benard-chandrasekhar-odd.cpp -lm -lboost_program_options -O3
-
-bin/Rayleigh-Benard-hurle-even: programs/Rayleigh-Benard-hurle-even.cpp obj/def.o obj/utils.o obj/SolverType.o
-	$(CXX) -o bin/Rayleigh-Benard-hurle-even obj/def.o obj/utils.o obj/SolverType.o programs/Rayleigh-Benard-hurle-even.cpp -lm -lboost_program_options -O3
-
-bin/Rayleigh-Benard-hurle-odd: programs/Rayleigh-Benard-hurle-odd.cpp obj/def.o obj/utils.o obj/SolverType.o
-	$(CXX) -o bin/Rayleigh-Benard-hurle-odd obj/def.o obj/utils.o obj/SolverType.o programs/Rayleigh-Benard-hurle-odd.cpp -lm -lboost_program_options -O3
+bin/free-heat-even: programs/free-heat-even.cpp obj/def.o obj/utils.o obj/SolverType.o
+	$(CXX) -o bin/free-heat-even obj/def.o obj/utils.o obj/SolverType.o programs/free-heat-even.cpp -lm -lboost_program_options -O3
 
 obj/def.o: src/def.cpp include/def.h
 	$(CXX) -c -o obj/def.o src/def.cpp $(CFLAGS)
