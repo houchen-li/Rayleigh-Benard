@@ -23,7 +23,7 @@ Rayleigh_Benard::SolverType & Rayleigh_Benard::SolverType::operator=(const Solve
 
 void Rayleigh_Benard::SolverType::initialize(void)
 {
-	data_[3] = std::sqrt(3.0)+2.0*(Real)std::rand()/(Real)RAND_MAX;
+	data_[3] = 2.0+(Real)std::rand()/(Real)RAND_MAX;
 	data_[4] = data_[0]/std::sqrt(data_[3]*data_[3]-1.0-2.0/std::sqrt(3.0)*data_[3]);
 	data_[3] *= data_[4];
 };
@@ -226,5 +226,5 @@ Real Rayleigh_Benard::SolverType::rigid_heat_even(Real _q1, Real _q2)
 Real Rayleigh_Benard::SolverType::free_heat_even(Real _q1, Real _q2)
 {
 	Real q0 = std::sqrt(-_q1*_q1 + _q2*_q2 + 2.0*std::sqrt(3.0)*_q1*_q2);
-	return 2.0*(_q1*std::sinh(_q1)-_q2*std::sin(_q2))/(std::cosh(_q1)+std::cos(_q2))-q0*std::tan(q0/2.0);
+	return 2.0*(_q1*std::sinh(_q1)-_q2*std::sin(_q2))/(std::cosh(_q1)+std::(_q2))-q0*std::tan(q0/2.0);
 }
