@@ -2,9 +2,6 @@
 #ifndef __SOLVERTYPE_H__
 #define __SOLVERTYPE_H__
 
-#include <iostream>
-#include <cmath>
-#include <cstdlib>
 #include "def.h"
 
 namespace Rayleigh_Benard{
