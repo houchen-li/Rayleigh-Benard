@@ -8,6 +8,7 @@
 #include <ctime>
 #include <string>
 #include <sstream>
+#include <boost/math/constants/constants.hpp>
 
 typedef bool Bool;
 

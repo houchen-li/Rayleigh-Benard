@@ -100,8 +100,18 @@ void Rayleigh_Benard::SolverType::solve(const Rayleigh_Benard::ModeType &e)
 			data_[6] = (a22*b1-a12*b2)/(a11*a22-a12*a21);
 			data_[7] = (a11*b2-a21*b1)/(a11*a22-a12*a21);
 			break;
-	
+
 		case 2:
+			data_[1] = std::pow(boost::math::constants::pi<Real>()*boost::math::constants::pi<Real>()+data_[0]*data_[0],3.0)/(data_[0]*data_[0]);
+			data_[2] = boost::math::constants::pi<Real>();
+			data_[3] = 0.0;
+			data_[4] = 0.0;
+			data_[5] = 1.0;
+			data_[6] = 0.0;
+			data_[7] = 0.0;
+			break;
+	
+		case 3:
 			do {
 				initialize();
 				b1 = -free_heat_even(data_[3], data_[4]);

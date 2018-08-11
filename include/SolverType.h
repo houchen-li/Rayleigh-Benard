@@ -5,7 +5,7 @@
 #include "def.h"
 
 namespace Rayleigh_Benard{
-	typedef enum{rigid_temp_even, rigid_heat_even, free_heat_even} ModeType;
+	typedef enum{rigid_temp_even, rigid_heat_even, free_temp_even, free_heat_even} ModeType;
 	class SolverType
 	{
 	public:
