@@ -1,0 +1,117 @@
+\chapter{\label{chap:03}The Derivation of Lorenz System}
+
+The equations of motion are used in the cases come from the following three principles: the incompressibility, the momentum law and the Juor diffusion law.\\
+\textbf{The incompressibility}
+\begin{equation}
+\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}+\frac{\partial w}{\partial z}=0.
+\label{equ:incompressibility}
+\end{equation}
+\textbf{The momentum law (Naiver-Stokes equations):}
+\begin{equation}
+\rho\frac{\partial \boldsymbol{u}}{\partial t}+\rho\left(\boldsymbol{u}\cdot\boldsymbol{\nabla}\right)\boldsymbol{u}=-\boldsymbol{\nabla}p+\mu\nabla^2\boldsymbol{u}+\rho\boldsymbol{g}
+\label{equ:naiver_stokes}
+\end{equation}
+\noindent \textbf{Juor diffusion law:}
+\begin{equation}
+\frac{\partial T}{\partial t}+\left(\boldsymbol{u}\cdot\boldsymbol{\nabla}\right)T=\kappa\nabla^2 T.
+\label{equ:jour_diffusion}
+\end{equation}
+For two dimensional ``rolls'' in the \(x\)-\(z\) plane, the \(v\)-component vanishes everywhere. The equations become
+\begin{align}
+	\frac{\partial u}{\partial x}+\frac{\partial w}{\partial z}&=0.\label{equ:incompressible_roll}\\
+	\rho\frac{\partial u}{\partial t}+\rho u\frac{\partial u}{\partial x}+\rho w\frac{\partial u}{\partial z}&=-\frac{\partial p}{\partial x}+\mu\nabla^2 u.\label{equ:navier_stokes_roll_1}\\
+	\rho\frac{\partial w}{\partial t}+\rho u\frac{\partial w}{\partial x}+\rho w\frac{\partial w}{\partial z}&=
+		-\frac{\partial p}{\partial z}+\mu\nabla^2 w-g\rho.\label{equ:navier_stokes_roll_2}\\
+	\frac{\partial T}{\partial t}+u\frac{\partial T}{\partial x}+w\frac{\partial T}{\partial z}&=\kappa\nabla^2 T.\label{equ:heat_defusion_roll}
+\end{align}
+Equation~\ref{equ:incompressible_roll} can be satisfied if \(\psi\) is represented by a stream function 
+\begin{equation}
+	u=-\frac{\partial \psi}{\partial z},\quad w=\frac{\partial \psi}{\partial x}.
+	\label{equ:stream_function}
+\end{equation}
+As for the temperature field, we split it into the static temperature profile and a perturbation \(\theta\left(x,z,t\right)\), i.e.
+\begin{equation}
+	T\left( t,x,z \right)=\left( T_0-\beta z \right)+\theta\left(x,z,t\right).
+	\label{equ:temperature_expansion}
+\end{equation}
+Here, \(T_0\) is the temperature of middle plane. \(\beta\) is the gradient of the static linear temperature profile, defined as
+\begin{equation}
+	\beta=\frac{\Delta T_0}{H}.
+	\label{equ:temperature_gradient}
+\end{equation}
+The pressure \(p\) can be eliminated by using the \(z\)-derivative of Equation~\ref{equ:navier_stokes_roll_1} to subtract the \(x\)-derivative of Equation~\ref{equ:navier_stokes_roll_2}. And by substituting the stream function, we obtain
+\begin{align}
+	\frac{\partial}{\partial t}\nabla^2\psi-\left(\frac{\partial}{\partial z}\psi\right)\left(\frac{\partial}{\partial x}\nabla^2\psi\right)+\left(\frac{\partial}{\partial x}\psi\right)\left(\frac{\partial}{\partial z}\nabla^2\psi\right)-g\alpha\frac{\partial\theta}{\partial x}-\nu\nabla^4\psi&=0.\label{equ:stream_equation}\\
+	\frac{\partial}{\partial t}\theta-\left(\frac{\partial}{\partial z}\psi\right)\left( \frac{\partial}{\partial x}\theta \right)+\left(\frac{\partial}{\partial x}\psi\right)\left( \frac{\partial}{\partial z}\theta \right)-\beta\frac{\partial}{\partial x}\psi-\kappa\nabla^2\theta&=0.\label{equ:thermal_equation}
+\end{align}
+This is Saltzmann's nonlinear equations. The foregoing equations can be translated to dimensionless form
+\begin{align}
+	\frac{\partial}{\partial t}\nabla^2\psi-\left(\frac{\partial}{\partial z}\psi\right)\left(\frac{\partial}{\partial x}\nabla^2\psi\right)+\left(\frac{\partial}{\partial x}\psi\right)\left(\frac{\partial}{\partial z}\nabla^2\psi\right)-\sigma\frac{\partial\theta}{\partial x}-\sigma\nabla^4\psi&=0.\label{equ:stream_equation_dimensionless}\\
+	\frac{\partial}{\partial t}\theta-\left(\frac{\partial}{\partial z}\psi\right)\left( \frac{\partial}{\partial x}\theta \right)+\left(\frac{\partial}{\partial x}\psi\right)\left( \frac{\partial}{\partial z}\theta \right)-R\frac{\partial}{\partial x}\psi-\nabla^2\theta&=0.\label{equ:thermal_equation_dimensionless}
+\end{align}
+under the transformation
+\begin{equation}
+	\left\{
+	\begin{matrix}
+	x\rightarrow Hx\\
+	z\rightarrow Hx\\
+	t\rightarrow\left( H^2/\kappa \right)t\\
+	\psi\rightarrow \kappa\psi\\
+	\theta\rightarrow \left( \kappa\nu/g\alpha H^3 \right)\theta\\
+	\end{matrix}
+	\right. .
+\end{equation}
+Here, the Prandtl number and the Rayleigh number first appear
+\begin{equation*}
+	\left\{\begin{matrix}\sigma=\frac{\nu}{\kappa}\\
+	R=\frac{g\alpha\beta H^4}{\kappa\nu}\end{matrix}\right. .
+\end{equation*}
+The result for case (a) is that for a critical minimum value of Rayleigh number,
+\begin{equation*}
+	R=R_c=\frac{27}{4}\pi^4.
+\end{equation*}
+a steady solution of the form
+\begin{align*}
+	\psi&=\frac{1}{a}A\sin\left(ax\right)\sin\left(\pi z\right);\\
+	\theta&=\frac{\left(\pi^2+a^2\right)^2}{a^2}B\cos\left(ax\right)\sin\left(\pi z\right).
+\end{align*}
+can satisfy the boundary conditions. If we substitute them to Equation~\ref{equ:stream_equation_dimensionless}-\ref{equ:thermal_equation_dimensionless}, one of the term will throw out
+\begin{equation*}
+	-\left(\frac{\partial}{\partial z}\psi\right)\left( \frac{\partial}{\partial x}\theta \right)+\left(\frac{\partial}{\partial x}\psi\right)\left( \frac{\partial}{\partial z}\theta \right)=\frac{\left(\pi^2+a^2\right)^2\pi}{2a^2}AB\sin\left( 2\pi z \right)
+\end{equation*}
+whose wave number is other than the critical mode. The appearance of this term suggests it should also be put into the solution to get more exact approach
+\begin{align*}
+	\psi&=\frac{1}{a}A\sin\left(ax\right)\sin\left(\pi z\right);\\
+	\theta&=\frac{\left(\pi^2+a^2\right)^2}{a^2}B\cos\left(ax\right)\sin\left(\pi z\right)-\frac{\left(\pi^2+a^2\right)^2\pi}{2a^2}C\sin\left( 2\pi z \right).
+\end{align*}
+So that the equations will be transformed to
+\begin{align*}
+	-\frac{\pi^2+a^2}{a}\frac{\mathrm{d}A}{\mathrm{d}t}+\frac{\left(\pi^2+a^2\right)^2}{a}\sigma B-\frac{\left(\pi^2+a^2\right)^2}{a}\sigma A&=0.\\
+	\frac{\left(\pi^2+a^2\right)^2}{a^2}\frac{\mathrm{d}B}{\mathrm{d}t}+\frac{\left(\pi^2+a^2\right)^2\pi^2}{2a^2}AC-RA+\frac{\left(\pi^2+a^2\right)^3}{a^2}B&=0.\\
+	-\frac{\left(\pi^2+a^2\right)^2\pi}{2a^2}\frac{\mathrm{d}C}{\mathrm{d}t}+\frac{\left(\pi^2+a^2\right)^2\pi}{2a^2}AB-\frac{4\left(\pi^2+a^2\right)^2\pi^3}{2a^2}C&=0.
+\end{align*}
+By rescale them with
+\begin{equation}
+	\left\{
+		\begin{matrix}
+			t=\left(\frac{3\pi^2}{2}\right)^{-1}\tau\\
+			A=3X\\
+			B=\frac{27\pi^3}{2\sqrt{2}}Y\\
+			C=\frac{27\pi^3}{4}Z\\
+		\end{matrix}
+	\right.
+	\label{equ:rescale}
+\end{equation}
+In the end, the Lorenz system can be obtained
+\begin{equation}
+	\frac{\mathrm{d}}{\mathrm{d}\tau}
+	\begin{pmatrix}
+		X\\Y\\Z
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+	&&-&\sigma X&+&\sigma Y&&\\-&XZ&+&rX&-&Y&&\\&XY&&&&&-&bZ\\
+	\end{pmatrix}
+	\label{equ:lorenz_system}
+\end{equation}
+\par

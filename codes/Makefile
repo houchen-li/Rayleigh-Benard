@@ -1,4 +1,4 @@
-CXX=cl
+CXX=g++
 CFLAGS=-O3
 
 all: bin/genModeFactors

@@ -1,0 +1,202 @@
+\chapter{\label{chap:02}The Characterization for The Normal Modes of RBC}
+
+The basic hydrodynamic problem is to solve a group of partial differential equations (PDE) under specified boundary conditions. Although the existence of solutions for Naiver-Stokes equation is still unsolved, scientist has to face the challenge without rigorous mathematical guarantee. One of the approach is to use linear approximation to ignore the nonlinear terms, by which people can jump across the uniqueness problem, since the nonlinear term always break the superposition law of states, resulting in the ruin of uniqueness.\par
+The advantage to use linear approximation is that, the PDE without nonlinear term can have exact eigenvalues and eigenstates. Regard of the superposition law, any states of Linear PDE can be decomposed to the sum of many eigenstates. Here we promote this principle to more general cases.
+\begin{center}
+	\parbox[c]{0.9\linewidth}{\textbf{An arbitrary state, even for turbulence with nonlinear effects, can be expanded to a series of solutions whose spatial components is corresponding to the PDE regardless of the nonlinearity, but with a different time dependent factor.}}
+\end{center}
+In this chapter, we will introduce Chandrasekhar's linear approach. The symbols being used are defined in Table~\ref{tab:sym}.\par
+\begin{table}[!ht]
+	\centering
+	\caption{The meaning of the symbols required.}
+	\label{tab:sym}
+		\begin{tabular}{cr}
+			\toprule
+			symbols & meaning \\
+			\midrule
+			\(t\) & time \\
+			\(\rho\) & the density field \\
+			\(u_i\) & the velocity field at the \(i\)'th direction \\
+			\(\mu\) & the viscosity coefficient \\
+			\(X_i\) & the external force at the \(i\)'th direction \\
+			\(T\) & the temperature field \\
+			\(p\) & pressure \\
+			\(c_V\) & the constant volume heat capacity \\
+			\(k\) & the heat conductivity \\
+			\(\kappa\) & the thermometric conductivity \\
+			\(\alpha\) & the expansion coefficient \\
+			\(\nu\) & the kinematic viscosity coefficient \\
+			\(g\) & gravitational acceleration \\
+			\bottomrule
+		\end{tabular}
+\end{table}
+
+
+\section{\label{sec:intr:derv}Derivation of The Perturbation Equations}
+
+The key point of solving RBC system is first to establish the equations of motion for an incompressible fluid. Chandrasekhar provided a path starting from the basic conservation laws.\par
+\noindent \textbf{Momentum law}:
+\begin{equation}
+\rho\frac{\partial u_i}{\partial t}+\rho u_j\frac{\partial u_i}{\partial x_j}=\rho X_i-\frac{\partial p}{\partial x_i}+\mu \nabla^2 u_i.
+\label{equ:cons_mom_1}
+\end{equation}\par
+\noindent \textbf{Jour's law}:
+\begin{equation}
+\rho\frac{\partial}{\partial t}\left( c_V T \right)+\rho u_j\frac{\partial}{\partial x_j}\left( c_V T \right)=\frac{\partial}{\partial x_j}\left( k\frac{\partial T}{\partial x_j} \right).
+\label{equ:cons_ene_1}
+\end{equation}\par
+\noindent Since the influence of the high order term is quite small, the Boussinesq approximation can be applied here. Consequently, Equation~\ref{equ:cons_mom_1} and Equation~\ref{equ:cons_ene_1} are reformed to Equation~\ref{equ:cons_mom_2} and Equation~\ref{equ:cons_ene_2}. 
+\begin{align}
+\frac{\partial u_i}{\partial t}+u_j\frac{\partial u_i}{\partial x_j}&=-\frac{1}{\rho_0}\frac{\partial p}{\partial x_i}+\left( 1+\frac{\delta\rho}{\rho_0} \right)X_i+\nu\nabla^2 u_i. \label{equ:cons_mom_2} \\
+\frac{\partial T}{\partial t}+u_j\frac{\partial T}{\partial x_j}&=\kappa\nabla^2 T. \label{equ:cons_ene_2}
+\end{align}
+\(\rho\) here is related to \(T\) due to thermal expansion
+\begin{equation}
+\rho=\rho_0\left[ 1-\alpha\left( T-T_0 \right) \right].
+\end{equation}
+\(\delta\rho\) is defined as the difference of density varies from the middle plane
+\begin{equation}
+\delta\rho=-\rho_0\alpha\left( T-T_0 \right).
+\end{equation}
+\(T_0\) here is the temperature at middle plane, \(\rho_0\) is the density when temperature equals to \(T_0\).\par
+Obviously, the gravitational force only influence on the vertical direction. Thus, we can simplify the representation of the external force as \(X_i=-g\lambda_i\), while \(\boldsymbol{\lambda}\) here is a unit vector \(\left( 0,0,1 \right)^\mathrm{T}\).\par
+Then the form of temperature, density, pressure at the stable state is obtained.
+\begin{align}
+T&=T_0-\beta\lambda_j x_j. \label{equ:temp_1} \\
+\rho&=\rho_0\left(1+\alpha\beta\lambda_j x_j\right). \label{equ:dens_1}\\
+p&=p_0-g\rho_0\left( \lambda_i x_i + \frac{1}{2}\alpha\beta\lambda_i\lambda_j x_i x_j \right). \label{equ:pres_1}
+\end{align}
+\(\beta\) here is the slope of temperature profile.\par
+Evidently, it is not easy to solve \(T\) out. An alternative way is to determine the perturbation differing from static state: it is because the situation we want to deal with is not under extremely high temperature difference between the top and bottom layers, which means the system won't go far away from the static case. \par
+We assume that the actual temperature differs from the static state with a small quantity \(\theta\), which lead to Equation~\ref{equ:temp_2} and Equation~\ref{equ:dens_2}. 
+\begin{align}
+T'&=T_0-\beta\lambda_j x_j+\theta. \label{equ:temp_2} \\
+\delta\rho&=-\alpha\rho\theta=-\alpha\rho_0\left( 1+\alpha\beta\lambda_j x_j \right). \label{equ:dens_2}
+\end{align}
+Then Equation~\ref{equ:cons_mom_2} and Equation~\ref{equ:cons_ene_2} are transformed to Equation~\ref{equ:cons_mom_3} and Equation~\ref{equ:cons_ene_3}.
+\begin{align}
+\frac{\partial u_i}{\partial t}&=-\frac{\partial}{\partial x_i}\left( \frac{\delta p}{\rho_0} \right)+g\alpha\theta\lambda_i+\nu\nabla^2 u_i. \label{equ:cons_mom_3}\\
+\frac{\partial \theta}{\partial t}&=\beta\lambda_j u_j+\kappa\nabla^2\theta. \label{equ:cons_ene_3}
+\end{align}
+The high order term in Equation~\ref{equ:cons_mom_2} is ignored.\par
+In order to get rid of the term containing \(\delta p\), we apply the curl operator Equation~\ref{equ:curl} on Equation~\ref{equ:cons_mom_3}. 
+\begin{equation}
+\mathrm{curl}_k=\epsilon_{ijk}\frac{\partial}{\partial x_j}.
+\label{equ:curl}
+\end{equation}
+And by using \(\boldsymbol{\omega}\) to represent the vorticity of the velocity field as Equation~\ref{equ:vort} showing, 
+\begin{equation}
+\omega_i=\epsilon_{ijk}\frac{\partial u_k}{\partial x_j}.
+\label{equ:vort}
+\end{equation}
+we have the equation
+\begin{equation}
+\frac{\partial \omega_i}{\partial t}=g\alpha\epsilon_{ijk}\frac{\partial \theta}{\partial x_j}\lambda_k+\nu\nabla^2\omega_i.
+\end{equation}
+And again take the curl of the equation, one can get
+\begin{equation}
+\frac{\partial}{\partial t}\epsilon_{ijk}\frac{\partial \omega_k}{\partial x_j}=g\alpha\epsilon_{ijk}\epsilon_{ijk}\frac{\partial^2\theta}{\partial x_l \partial x_j}\lambda_m+\nu\nabla^2\epsilon_{ijk}\frac{\partial \omega_k}{\partial x_j}.
+\end{equation}
+This equation can be simplified to
+\begin{equation}
+\frac{\partial}{\partial t}\nabla^2 u_i=g\alpha\left( \lambda_i\nabla^2\theta-\lambda_j\frac{\partial^2\theta}{\partial x_l \partial x_j} \right)+\nu\nabla^4 u_i.
+\end{equation}
+In the end, the perturbation equation can be obtained, which is given as Equation~\ref{equ:pert_zeta}, Equation~\ref{equ:pert_w} and Equation~\ref{equ:pert_theta}. 
+\begin{align}
+\frac{\partial\zeta}{\partial t}&=\nu\nabla^2\zeta. \label{equ:pert_zeta} \\
+\frac{\partial}{\partial t}\nabla^2 w&=g\alpha\left( \frac{\partial^2\theta}{\partial x^2}+\frac{\partial^2\theta}{\partial y^2} \right)+\nu\nabla^4 w. \label{equ:pert_w} \\
+\frac{\partial \theta}{\partial t}&=\beta w+\kappa\nabla^2\theta. \label{equ:pert_theta}
+\end{align}
+where \(\zeta=\lambda_j\omega_j\) and \(w=\lambda_j u_j\).\par
+
+\section{~\label{chap:02:boundary_conditions}The Boundary Conditions}
+
+As it has been mentioned before, there are 4 cases of boundary conditions in RBC. In this section, we will translate them from linguistic interpretation to mathematical formalism.\par
+We confined the fluid between the planes \(z=0\) and \(z=d\), where the following relation must be satisfied
+\begin{equation*}
+\left.w\right|_{z=0,d}=0
+\end{equation*}
+since the vertical velocity field shall vanish at the boundary layers. Despite of that, two extra condition can also be conducted here
+\begin{itemize}
+	\item rigid surface on which no slip occurs: \(\left.\frac{\partial u}{\partial x}\right|_{z=0,d}=\left.\frac{\partial v}{\partial y}\right|_{z=0,d}=0\).
+	\item free surface on which no tangential stresses act: \(\left.\frac{\partial u}{\partial z}\right|_{z=0,d}=\left.\frac{\partial v}{\partial z}\right|_{z=0,d}=0\).
+\end{itemize}
+According to the equation of continuity
+\begin{equation}
+\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}+\frac{\partial w}{\partial z}=0
+\label{equ:continuity}
+\end{equation}
+the rigid surface condition will have
+\begin{equation*}
+\left.\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}+\frac{\partial w}{\partial z}\right|_{z=0,d}=\left.\frac{\partial w}{\partial z}\right|_{z=0,d}=0
+\end{equation*}
+while the free surface condition will have
+\begin{equation*}
+\left.\frac{\partial}{\partial z}\left(\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}+\frac{\partial w}{\partial z}\right)\right|_{z=0,d}=\left.\frac{\partial^2 w}{\partial z^2}\right|_{z=0,d}=0
+\end{equation*}
+In spite of the velocity fields, two kinds of the thermal field are
+\begin{itemize}
+	\item prescribed temperature: \(\left.T\right|_{z=0,d}=\text{const}\)
+	\item prescribed heat flux: \(\left.\frac{\partial T}{\partial z}\right|_{z=0,d}=\text{const}\)
+\end{itemize}
+Since only the perturbation term effects, the prescribed temperature has
+\begin{equation*}
+\left.\theta\right|_{z=0,d}=0
+\end{equation*}
+while the prescribed heat flux has
+\begin{equation*}
+\left.\frac{\partial\theta}{\partial z}\right|_{z=0,d}=0
+\end{equation*}\par
+So far, the boundary conditions have already been translated to their corresponding forms. In the next section, We will prove that with different combinations of boundary conditions, the normal modes of the Equation~\ref{equ:pert_zeta}-\ref{equ:pert_theta} will perform typically different.\par
+
+\section{\label{sec:meth:norm}The Normal modes}
+
+The normal modes of Equation~\ref{equ:pert_zeta}-\ref{equ:pert_theta} can be written as
+\begin{align}
+	\zeta&=Z\left( z \right)\exp\left[ \mathrm{i}\left( k_x x+k_y y \right)+pt \right]. \label{equ:norm_zeta} \\
+	w&=W\left( z \right)\exp\left[ \mathrm{i}\left( k_x x+k_y y \right)+pt \right]. \label{equ:norm_w} \\
+	\theta&=\Theta\left( z \right)\exp\left[ \mathrm{i}\left( k_x x+k_y y \right)+pt \right]. \label{equ:norm_theta}
+\end{align}
+where \(k=\sqrt{k_x^2+k_y^2}\). The differential operators under the normal modes become variables:
+\begin{equation}
+	\frac{\partial}{\partial t}=p,\quad \frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}=-k^2,\quad \nabla^2=\frac{\mathrm{d}^2}{\mathrm{d}z^2}-k^2.
+\end{equation}
+By substituting them into Equation~\ref{equ:pert_zeta}-\ref{equ:pert_theta}, we get
+\begin{align}
+	pZ&=\nu\left( \frac{\mathrm{d}^2}{\mathrm{d}z^2}-k^2 \right)Z. \label{equ:zeta} \\
+	p\left( \frac{\mathrm{d}^2}{\mathrm{d}z^2}-k^2 \right)W&=-g\alpha k^2\Theta+\nu\left( \frac{\mathrm{d}^2}{\mathrm{d}z^2}-k^2 \right)^2 W. \label{equ:w} \\
+	p\Theta&=\beta W+\kappa\left( \frac{\mathrm{d}^2}{\mathrm{d}z^2}-k^2 \right)\Theta. \label{equ:theta}
+\end{align}
+Then we introduce dimensionless units here to let
+\begin{equation}
+	a=kd,\quad\sigma=pd^2/\nu.
+	\label{equ:dimensionless}
+\end{equation}
+Thus, the dimensionless version of Equation~\ref{equ:norm_w}-\ref{equ:norm_theta} come out
+\begin{align}
+	\left( D^2-a^2 \right)\left( D^2-a^2-\sigma \right)W&=\left( \frac{g\alpha}{\nu}d^2 \right)a^2\Theta. \label{equ:norm_w_dim_less} \\
+	\left( D^2-a^2-\mathrm{Pr}~\sigma \right)\Theta&=-\left( \frac{\beta}{\kappa}d^2 \right)W.
+\end{align}
+\(\mathrm{Pr}\) is the Prandtl number. By combining those two equations together to eliminate \(\Theta\), we obtained the eigenvalues equation
+\begin{equation}
+	\left( D^2-a^2 \right)\left( D^2-a^2-\sigma \right)\left( D^2-a^2-\mathrm{Pr}~\sigma \right)W=-Ra^2W.\label{equ:eigen_equation}
+\end{equation}
+where
+\begin{equation}
+	R=\frac{g\alpha\beta}{\kappa\nu}d^4.\label{equ:rayleigh}
+\end{equation}
+is the Rayleigh number.\par
+While for marginal states where the  it has
+\begin{equation}
+	\left( D^2-a^2 \right)^3W=-Ra^2W.\label{equ:eigen_equation_marginal}
+\end{equation}
+since the time factor \(p=0\).\par
+Then we determined the eigenvalue of the normal modes from Equation~\ref{equ:eigen_equation_marginal}. By assuming that the normal modes with an eigenvalue \(q\):
+\begin{equation}
+W=Ae^{qz}.\label{equ:eigen_mode}
+\end{equation}
+The eigenvalue equation is obtained:
+\begin{equation}
+	\left(q^2-a^2\right)^3=-Ra^2.\label{equ:eigen_equation_values}
+\end{equation}
+The common solutions for \(W\) now are given by the roots \(q=\mathrm{i}q_0,q_1,q_2\) of Equation~\ref{equ:eigen_equation_values}.

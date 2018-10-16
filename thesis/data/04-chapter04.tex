@@ -1,0 +1,37 @@
+\chapter{\label{chap:04}The Dynamic System of The Rigid Boundaries RBC}
+
+As it has already been mentioned before, the eigenmodes of RBC for rigid boundaries are
+\begin{align}
+	\psi\left( x,z \right)&=A~a^{-1}W\left( z \right)\sin\left( ax \right) \label{equ:eigenmodes_velocity}\\
+	\theta\left( x,z \right)&=B~a^{-2}\left( D^2-a^2 \right)^2W\left( z \right)\cos\left( ax \right) \label{equ:eigenmodes_temp}
+\end{align}
+where \(W\left( z \right)\) can be
+\begin{equation*}
+	W_e\left( z \right)=\alpha_0\cos\left( q_0 z \right)+\alpha_1\cosh\left[\left( q_1-q_2\mathrm{i}\right) z \right]+\alpha_2\cosh\left[ \left(q_1+q_2\mathrm{i}\right) z \right].
+\end{equation*}
+for the even modes,
+\begin{equation*}
+	W_o\left( z \right)=\alpha_0\sin\left( q_0 z \right)+\alpha_1\sinh\left[\left( q_1-q_2\mathrm{i}\right) z \right]+\alpha_2\sinh\left[ \left(q_1+q_2\mathrm{i}\right) z \right].
+\end{equation*}
+for the odd modes. However, the case we care about is at the low Rayleigh number. The occurrence of odd modes require higher fluctuation. In the other words, it requires larger Rayleigh number. Due to the reason, the odd modes can be simply throw away.\par
+Since we want to know about the time evolution of the state. Some time dependent factors shall be coupling to the state
+\begin{align*}
+	W_e\left(z,t\right)=&\cos\left( q_0 z \right)\exp\left[-\left(q_0^2+a^2\right)f\left(t\right)\right]\\
+	&+\alpha\cosh\left[\left( q_1+q_2\mathrm{i}\right) z \right]\exp\left\{\left[\left(q_1+q_2\mathrm{i}\right)^2-a^2\right]f\left(t\right)\right\}\\
+	&+\alpha^*\cosh\left[ \left(q_1-q_2\mathrm{i}\right) z \right]\exp\left\{\left[\left(q_1-q_2\mathrm{i}\right)^2-a^2\right]f\left(t\right)\right\}.
+\end{align*}
+Thus it can give
+\begin{align*}
+	\frac{\partial \psi\left(x,z,t\right)}{\partial t}=\left(\frac{\mathrm{d} f}{\mathrm{d} t}\right)\nabla^2\psi\left(x,z,t\right)
+\end{align*}
+whose importance will be uncovered later.\par
+Obviously, the time factor can be divided into real and imaginary parts
+\begin{equation*}
+	\exp\left\{ \left[\left( q_1\pm q_2\mathrm{i} \right)^2-a^2 \right]f\left( t \right)\right\}=\exp\left[\left( q_1^2-q_2^2-a^2\pm 2 q_1 q_2\mathrm{i} \right)f\left( t \right)\right].
+\end{equation*}
+According to Vieta theorem, we have
+\begin{gather*}
+	q_1^2-q_2^2-a^2=\frac{1}{2}\left(q_0^2+a^2\right)\\
+	2q_1q_2=\frac{\sqrt{3}}{2}\left(q_0^2+a^2\right)
+\end{gather*}
+Thus, the even normal modes become
