@@ -28,12 +28,12 @@ void Rayleigh_Benard::SolverType::initialize(void)
 	data_[3] *= data_[4];
 }
 
-void Rayleigh_Benard::SolverType::solve(const Rayleigh_Benard::ModeType &e)
+void Rayleigh_Benard::SolverType::solve(const Rayleigh_Benard::ModeType &_e)
 {
 	Real a11, a12, a21, a22, b1, b2;
 	Uint i;
 
-	switch (e) {
+	switch (_e) {
 
 		case 0:
 			do {
@@ -44,7 +44,7 @@ void Rayleigh_Benard::SolverType::solve(const Rayleigh_Benard::ModeType &e)
 					a11 = (-rigid_temp_even(data_[3]+2.0*data_[8], data_[4])+8.0*rigid_temp_even(data_[3]+data_[8], data_[4])-8.0*rigid_temp_even(data_[3]-data_[8], data_[4])+rigid_temp_even(data_[3]-2.0*data_[8], data_[4]))/(12.0*data_[8]);
 					a12 = (-rigid_temp_even(data_[3], data_[4]+2.0*data_[8])+8.0*rigid_temp_even(data_[3], data_[4]+data_[8])-8.0*rigid_temp_even(data_[3], data_[4]-data_[8])+rigid_temp_even(data_[3], data_[4]-2.0*data_[8]))/(12.0*data_[8]);
 					a21 = 2.0*(data_[3]-data_[4]/std::sqrt(3.0));
-					a22 = 2.0*(-data_[3]-data_[4]/std::sqrt(3.0));
+					a22 = 2.0*(-data_[4]-data_[3]/std::sqrt(3.0));
 					data_[3] += (a22*b1-a12*b2)/(a11*a22-a12*a21);
 					data_[4] += (a11*b2-a21*b1)/(a11*a22-a12*a21);
 					b1 = -rigid_temp_even(data_[3], data_[4]);
@@ -60,9 +60,9 @@ void Rayleigh_Benard::SolverType::solve(const Rayleigh_Benard::ModeType &e)
 			b1 = -std::cos(data_[2]/2.0);
 			b2 = data_[2]*std::sin(data_[2]/2.0);
 			a11 = std::cosh(data_[3]/2.0)*std::cos(data_[4]/2.0);
-			a12 = std::sinh(data_[3]/2.0)*std::sin(data_[4]/2.0);
+			a12 = -std::sinh(data_[3]/2.0)*std::sin(data_[4]/2.0);
 			a21 = data_[3]*std::sinh(data_[3]/2.0)*std::cos(data_[4]/2.0)-data_[4]*std::cosh(data_[3]/2.0)*std::sin(data_[4]/2.0);
-			a22 = data_[3]*std::cosh(data_[3]/2.0)*std::sin(data_[4]/2.0)+data_[4]*std::sinh(data_[3]/2.0)*std::cos(data_[4]/2.0);
+			a22 = -data_[3]*std::cosh(data_[3]/2.0)*std::sin(data_[4]/2.0)-data_[4]*std::sinh(data_[3]/2.0)*std::cos(data_[4]/2.0);
 			data_[5] = 1.0;
 			data_[6] = (a22*b1-a12*b2)/(a11*a22-a12*a21);
 			data_[7] = (a11*b2-a21*b1)/(a11*a22-a12*a21);
@@ -71,13 +71,46 @@ void Rayleigh_Benard::SolverType::solve(const Rayleigh_Benard::ModeType &e)
 		case 1:
 			do {
 				initialize();
+				b1 = -rigid_temp_odd(data_[3], data_[4]);
+				b2 = -data_[3]*data_[3]+data_[4]*data_[4]+2.0/std::sqrt(3.0)*data_[3]*data_[4]+data_[0]*data_[0];
+				for (i = 0; i < 20; i++) {
+					a11 = (-rigid_temp_odd(data_[3]+2.0*data_[8], data_[4])+8.0*rigid_temp_odd(data_[3]+data_[8], data_[4])-8.0*rigid_temp_odd(data_[3]-data_[8], data_[4])+rigid_temp_odd(data_[3]-2.0*data_[8], data_[4]))/(12.0*data_[8]);
+					a12 = (-rigid_temp_odd(data_[3], data_[4]+2.0*data_[8])+8.0*rigid_temp_odd(data_[3], data_[4]+data_[8])-8.0*rigid_temp_odd(data_[3], data_[4]-data_[8])+rigid_temp_odd(data_[3], data_[4]-2.0*data_[8]))/(12.0*data_[8]);
+					a21 = 2.0*(data_[3]-data_[4]/std::sqrt(3.0));
+					a22 = 2.0*(-data_[4]-data_[3]/std::sqrt(3.0));
+					data_[3] += (a22*b1-a12*b2)/(a11*a22-a12*a21);
+					data_[4] += (a11*b2-a21*b1)/(a11*a22-a12*a21);
+					b1 = -rigid_temp_odd(data_[3], data_[4]);
+					b2 = -data_[3]*data_[3]+data_[4]*data_[4]+2.0/std::sqrt(3.0)*data_[3]*data_[4]+data_[0]*data_[0];
+					if (std::sqrt(b1*b1+b2*b2) < data_[9]) {
+						data_[0] = std::sqrt(data_[3]*data_[3] - data_[4]*data_[4] - 2.0/std::sqrt(3.0)*data_[3]*data_[4]);
+						data_[1] = 64/(3*std::sqrt(3.0))*data_[3]*data_[3]*data_[3]*data_[4]*data_[4]*data_[4]/(data_[0]*data_[0]);
+						data_[2] = std::sqrt(-data_[3]*data_[3] + data_[4]*data_[4] + 2.0*std::sqrt(3.0)*data_[3]*data_[4]);
+						break;
+					}
+				}
+			} while (i == 20 || data_[1]>2e5);
+			b1 = -std::sin(data_[2]/2.0);
+			b2 = -data_[2]*std::cos(data_[2]/2.0);
+			a11 = std::sinh(data_[3]/2.0)*std::cos(data_[4]/2.0);
+			a12 = std::cosh(data_[3]/2.0)*std::sin(data_[4]/2.0);
+			a21 = data_[3]*std::cosh(data_[3]/2.0)*std::cos(data_[4]/2.0)-data_[4]*std::sinh(data_[3]/2.0)*std::sin(data_[4]/2.0);
+			a22 = data_[3]*std::sinh(data_[3]/2.0)*std::sin(data_[4]/2.0)+data_[4]*std::cosh(data_[3]/2.0)*std::cos(data_[4]/2.0);
+			data_[5] = 1.0;
+			data_[6] = (a22*b1-a12*b2)/(a11*a22-a12*a21);
+			data_[7] = (a11*b2-a21*b1)/(a11*a22-a12*a21);
+			break;
+
+		case 2:
+			do {
+				initialize();
 				b1 = -rigid_heat_even(data_[3], data_[4]);
 				b2 = -data_[3]*data_[3]+data_[4]*data_[4]+2.0/std::sqrt(3.0)*data_[3]*data_[4]+data_[0]*data_[0];
 				for (i = 0; i < 20; i++) {
 					a11 = (-rigid_heat_even(data_[3]+2.0*data_[8], data_[4])+8.0*rigid_heat_even(data_[3]+data_[8], data_[4])-8.0*rigid_heat_even(data_[3]-data_[8], data_[4])+rigid_heat_even(data_[3]-2.0*data_[8], data_[4]))/(12.0*data_[8]);
 					a12 = (-rigid_heat_even(data_[3], data_[4]+2.0*data_[8])+8.0*rigid_heat_even(data_[3], data_[4]+data_[8])-8.0*rigid_heat_even(data_[3], data_[4]-data_[8])+rigid_heat_even(data_[3], data_[4]-2.0*data_[8]))/(12.0*data_[8]);
 					a21 = 2.0*(data_[3]-data_[4]/std::sqrt(3.0));
-					a22 = 2.0*(-data_[3]-data_[4]/std::sqrt(3.0));
+					a22 = 2.0*(-data_[4]-data_[3]/std::sqrt(3.0));
 					data_[3] += (a22*b1-a12*b2)/(a11*a22-a12*a21);
 					data_[4] += (a11*b2-a21*b1)/(a11*a22-a12*a21);
 					b1 = -rigid_heat_even(data_[3], data_[4]);
@@ -93,15 +126,48 @@ void Rayleigh_Benard::SolverType::solve(const Rayleigh_Benard::ModeType &e)
 			b1 = -std::cos(data_[2]/2.0);
 			b2 = data_[2]*std::sin(data_[2]/2.0);
 			a11 = std::cosh(data_[3]/2.0)*std::cos(data_[4]/2.0);
-			a12 = std::sinh(data_[3]/2.0)*std::sin(data_[4]/2.0);
+			a12 = -std::sinh(data_[3]/2.0)*std::sin(data_[4]/2.0);
 			a21 = data_[3]*std::sinh(data_[3]/2.0)*std::cos(data_[4]/2.0)-data_[4]*std::cosh(data_[3]/2.0)*std::sin(data_[4]/2.0);
-			a22 = data_[3]*std::cosh(data_[3]/2.0)*std::sin(data_[4]/2.0)+data_[4]*std::sinh(data_[3]/2.0)*std::cos(data_[4]/2.0);
+			a22 = -data_[3]*std::cosh(data_[3]/2.0)*std::sin(data_[4]/2.0)-data_[4]*std::sinh(data_[3]/2.0)*std::cos(data_[4]/2.0);
 			data_[5] = 1.0;
 			data_[6] = (a22*b1-a12*b2)/(a11*a22-a12*a21);
 			data_[7] = (a11*b2-a21*b1)/(a11*a22-a12*a21);
 			break;
 
-		case 2:
+		case 3:
+			do {
+				initialize();
+				b1 = -rigid_heat_odd(data_[3], data_[4]);
+				b2 = -data_[3]*data_[3]+data_[4]*data_[4]+2.0/std::sqrt(3.0)*data_[3]*data_[4]+data_[0]*data_[0];
+				for (i = 0; i < 20; i++) {
+					a11 = (-rigid_heat_odd(data_[3]+2.0*data_[8], data_[4])+8.0*rigid_heat_odd(data_[3]+data_[8], data_[4])-8.0*rigid_heat_odd(data_[3]-data_[8], data_[4])+rigid_heat_odd(data_[3]-2.0*data_[8], data_[4]))/(12.0*data_[8]);
+					a12 = (-rigid_heat_odd(data_[3], data_[4]+2.0*data_[8])+8.0*rigid_heat_odd(data_[3], data_[4]+data_[8])-8.0*rigid_heat_odd(data_[3], data_[4]-data_[8])+rigid_heat_odd(data_[3], data_[4]-2.0*data_[8]))/(12.0*data_[8]);
+					a21 = 2.0*(data_[3]-data_[4]/std::sqrt(3.0));
+					a22 = 2.0*(-data_[4]-data_[3]/std::sqrt(3.0));
+					data_[3] += (a22*b1-a12*b2)/(a11*a22-a12*a21);
+					data_[4] += (a11*b2-a21*b1)/(a11*a22-a12*a21);
+					b1 = -rigid_heat_odd(data_[3], data_[4]);
+					b2 = -data_[3]*data_[3]+data_[4]*data_[4]+2.0/std::sqrt(3.0)*data_[3]*data_[4]+data_[0]*data_[0];
+					if (std::sqrt(b1*b1+b2*b2) < data_[9]) {
+						data_[0] = std::sqrt(data_[3]*data_[3] - data_[4]*data_[4] - 2.0/std::sqrt(3.0)*data_[3]*data_[4]);
+						data_[1] = 64/(3*std::sqrt(3.0))*data_[3]*data_[3]*data_[3]*data_[4]*data_[4]*data_[4]/(data_[0]*data_[0]);
+						data_[2] = std::sqrt(-data_[3]*data_[3] + data_[4]*data_[4] + 2.0*std::sqrt(3.0)*data_[3]*data_[4]);
+						break;
+					}
+				}
+			} while (i == 20 || data_[1]>7e4);
+			b1 = -std::sin(data_[2]/2.0);
+			b2 = -data_[2]*std::cos(data_[2]/2.0);
+			a11 = std::sinh(data_[3]/2.0)*std::cos(data_[4]/2.0);
+			a12 = std::cosh(data_[3]/2.0)*std::sin(data_[4]/2.0);
+			a21 = data_[3]*std::cosh(data_[3]/2.0)*std::cos(data_[4]/2.0)-data_[4]*std::sinh(data_[3]/2.0)*std::sin(data_[4]/2.0);
+			a22 = data_[3]*std::sinh(data_[3]/2.0)*std::sin(data_[4]/2.0)+data_[4]*std::cosh(data_[3]/2.0)*std::cos(data_[4]/2.0);
+			data_[5] = 1.0;
+			data_[6] = (a22*b1-a12*b2)/(a11*a22-a12*a21);
+			data_[7] = (a11*b2-a21*b1)/(a11*a22-a12*a21);
+			break;
+
+		case 4:
 			data_[1] = std::pow(boost::math::constants::pi<Real>()*boost::math::constants::pi<Real>()+data_[0]*data_[0],3.0)/(data_[0]*data_[0]);
 			data_[2] = boost::math::constants::pi<Real>();
 			data_[3] = 0.0;
@@ -110,8 +176,18 @@ void Rayleigh_Benard::SolverType::solve(const Rayleigh_Benard::ModeType &e)
 			data_[6] = 0.0;
 			data_[7] = 0.0;
 			break;
-	
-		case 3:
+
+		case 5:
+			data_[1] = std::pow(4.0*boost::math::constants::pi<Real>()*boost::math::constants::pi<Real>()+data_[0]*data_[0],3.0)/(data_[0]*data_[0]);
+			data_[2] = 2*boost::math::constants::pi<Real>();
+			data_[3] = 0.0;
+			data_[4] = 0.0;
+			data_[5] = 1.0;
+			data_[6] = 0.0;
+			data_[7] = 0.0;
+			break;
+
+		case 6:
 			do {
 				initialize();
 				b1 = -free_heat_even(data_[3], data_[4]);
@@ -120,7 +196,7 @@ void Rayleigh_Benard::SolverType::solve(const Rayleigh_Benard::ModeType &e)
 					a11 = (-free_heat_even(data_[3]+2.0*data_[8], data_[4])+8.0*free_heat_even(data_[3]+data_[8], data_[4])-8.0*free_heat_even(data_[3]-data_[8], data_[4])+free_heat_even(data_[3]-2.0*data_[8], data_[4]))/(12.0*data_[8]);
 					a12 = (-free_heat_even(data_[3], data_[4]+2.0*data_[8])+8.0*free_heat_even(data_[3], data_[4]+data_[8])-8.0*free_heat_even(data_[3], data_[4]-data_[8])+free_heat_even(data_[3], data_[4]-2.0*data_[8]))/(12.0*data_[8]);
 					a21 = 2.0*(data_[3]-data_[4]/std::sqrt(3.0));
-					a22 = 2.0*(-data_[3]-data_[4]/std::sqrt(3.0));
+					a22 = 2.0*(-data_[4]-data_[3]/std::sqrt(3.0));
 					data_[3] += (a22*b1-a12*b2)/(a11*a22-a12*a21);
 					data_[4] += (a11*b2-a21*b1)/(a11*a22-a12*a21);
 					b1 = -free_heat_even(data_[3], data_[4]);
@@ -136,13 +212,47 @@ void Rayleigh_Benard::SolverType::solve(const Rayleigh_Benard::ModeType &e)
 			b1 = -std::cos(data_[2]/2.0);
 			b2 = data_[2]*std::sin(data_[2]/2.0);
 			a11 = std::cosh(data_[3]/2.0)*std::cos(data_[4]/2.0);
-			a12 = std::sinh(data_[3]/2.0)*std::sin(data_[4]/2.0);
-			a21 = data_[3]*std::sinh(data_[3]/2.0)*std::cos(data_[4]/2.0)-data_[4]*std::cosh(data_[3]/2.0)*std::sin(data_[4]/2.0);
-			a22 = data_[3]*std::cosh(data_[3]/2.0)*std::sin(data_[4]/2.0)+data_[4]*std::sinh(data_[3]/2.0)*std::cos(data_[4]/2.0);
+			a12 = -std::sinh(data_[3]/2.0)*std::sin(data_[4]/2.0);
+			a21 = -(data_[3]/2.0+data_[4]*std::sqrt(3.0)/2.0)*std::sinh(data_[3]/2.0)*std::cos(data_[4]/2.0)+(data_[4]/2.0-data_[3]*std::sqrt(3.0)/2.0)*std::cosh(data_[3]/2.0)*std::sin(data_[4]/2.0);
+			a22 = (data_[3]/2.0+data_[4]*std::sqrt(3.0)/2.0)*std::cosh(data_[3]/2.0)*std::sin(data_[4]/2.0)+(data_[4]/2.0-data_[3]*std::sqrt(3.0)/2.0)*std::sinh(data_[3]/2.0)*std::cos(data_[4]/2.0);
 			data_[5] = 1.0;
 			data_[6] = (a22*b1-a12*b2)/(a11*a22-a12*a21);
 			data_[7] = (a11*b2-a21*b1)/(a11*a22-a12*a21);
 			break;
+
+		case 7:
+			do {
+				initialize();
+				b1 = -free_heat_odd(data_[3], data_[4]);
+				b2 = -data_[3]*data_[3]+data_[4]*data_[4]+2.0/std::sqrt(3.0)*data_[3]*data_[4]+data_[0]*data_[0];
+				for (i = 0; i < 20; i++) {
+					a11 = (-free_heat_odd(data_[3]+2.0*data_[8], data_[4])+8.0*free_heat_odd(data_[3]+data_[8], data_[4])-8.0*free_heat_odd(data_[3]-data_[8], data_[4])+free_heat_odd(data_[3]-2.0*data_[8], data_[4]))/(12.0*data_[8]);
+					a12 = (-free_heat_odd(data_[3], data_[4]+2.0*data_[8])+8.0*free_heat_odd(data_[3], data_[4]+data_[8])-8.0*free_heat_odd(data_[3], data_[4]-data_[8])+free_heat_odd(data_[3], data_[4]-2.0*data_[8]))/(12.0*data_[8]);
+					a21 = 2.0*(data_[3]-data_[4]/std::sqrt(3.0));
+					a22 = 2.0*(-data_[4]-data_[3]/std::sqrt(3.0));
+					data_[3] += (a22*b1-a12*b2)/(a11*a22-a12*a21);
+					data_[4] += (a11*b2-a21*b1)/(a11*a22-a12*a21);
+					b1 = -free_heat_odd(data_[3], data_[4]);
+					b2 = -data_[3]*data_[3]+data_[4]*data_[4]+2.0/std::sqrt(3.0)*data_[3]*data_[4]+data_[0]*data_[0];
+					if (std::sqrt(b1*b1+b2*b2) < data_[9]) {
+						data_[0] = std::sqrt(data_[3]*data_[3] - data_[4]*data_[4] - 2.0/std::sqrt(3.0)*data_[3]*data_[4]);
+						data_[1] = 64/(3*std::sqrt(3.0))*data_[3]*data_[3]*data_[3]*data_[4]*data_[4]*data_[4]/(data_[0]*data_[0]);
+						data_[2] = std::sqrt(-data_[3]*data_[3] + data_[4]*data_[4] + 2.0*std::sqrt(3.0)*data_[3]*data_[4]);
+						break;
+					}
+				}
+			} while (i == 20 || data_[1]>3e4);
+			b1 = -std::sin(data_[2]/2.0);
+			b2 = -data_[2]*std::cos(data_[2]/2.0);
+			a11 = std::sinh(data_[3]/2.0)*std::cos(data_[4]/2.0);
+			a12 = std::cosh(data_[3]/2.0)*std::sin(data_[4]/2.0);
+			a21 = -(data_[3]/2.0+data_[4]*std::sqrt(3.0)/2.0)*std::cosh(data_[3]/2.0)*std::cos(data_[4]/2.0)+(data_[4]/2.0-data_[3]*std::sqrt(3.0)/2.0)*std::sinh(data_[3]/2.0)*std::sin(data_[4]/2.0);
+			a22 = -(data_[3]/2.0+data_[4]*std::sqrt(3.0)/2.0)*std::sinh(data_[3]/2.0)*std::sin(data_[4]/2.0)-(data_[4]/2.0-data_[3]*std::sqrt(3.0)/2.0)*std::cosh(data_[3]/2.0)*std::cos(data_[4]/2.0);
+			data_[5] = 1.0;
+			data_[6] = (a22*b1-a12*b2)/(a11*a22-a12*a21);
+			data_[7] = (a11*b2-a21*b1)/(a11*a22-a12*a21);
+			break;
+
 	}
 }
 
@@ -233,14 +343,32 @@ Real Rayleigh_Benard::SolverType::rigid_temp_even(Real _q1, Real _q2)
 	return ((_q1+std::sqrt(3.0)*_q2)*std::sinh(_q1)+(std::sqrt(3.0)*_q1-_q2)*std::sin(_q2))/(std::cosh(_q1)+std::cos(_q2))+q0*std::tan(q0/2.0);
 }
 
+Real Rayleigh_Benard::SolverType::rigid_temp_odd(Real _q1, Real _q2)
+{
+	Real q0 = std::sqrt(-_q1*_q1 + _q2*_q2 + 2.0*std::sqrt(3.0)*_q1*_q2);
+	return ((_q1+std::sqrt(3.0)*_q2)*std::sinh(_q1)-(std::sqrt(3.0)*_q1-_q2)*std::sin(_q2))/(std::cosh(_q1)-std::cos(_q2))-q0/std::tan(q0/2.0);
+}
+
 Real Rayleigh_Benard::SolverType::rigid_heat_even(Real _q1, Real _q2)
 {
 	Real q0 = std::sqrt(-_q1*_q1 + _q2*_q2 + 2.0*std::sqrt(3.0)*_q1*_q2);
 	return (_q1*_q1+_q2*_q2)*(std::cosh(_q1)-std::cos(_q2))/((_q1-std::sqrt(3.0)*_q2)*std::sinh(_q1)-(std::sqrt(3.0)*_q1+_q2)*std::sin(_q2))+q0*std::tan(q0/2.0);
 }
 
+Real Rayleigh_Benard::SolverType::rigid_heat_odd(Real _q1, Real _q2)
+{
+	Real q0 = std::sqrt(-_q1*_q1 + _q2*_q2 + 2.0*std::sqrt(3.0)*_q1*_q2);
+	return (_q1*_q1+_q2*_q2)*(std::cosh(_q1)+std::cos(_q2))/((_q1-std::sqrt(3.0)*_q2)*std::sinh(_q1)+(std::sqrt(3.0)*_q1+_q2)*std::sin(_q2))-q0/std::tan(q0/2.0);
+}
+
 Real Rayleigh_Benard::SolverType::free_heat_even(Real _q1, Real _q2)
 {
 	Real q0 = std::sqrt(-_q1*_q1 + _q2*_q2 + 2.0*std::sqrt(3.0)*_q1*_q2);
-	return 2.0*(_q1*std::sinh(_q1)-_q2*std::sin(_q2))/(std::cosh(_q1)+std::cos(_q2))-q0*std::tan(q0/2.0);
+	return (_q1*std::sinh(_q1)-_q2*std::sin(_q2))/(std::cosh(_q1)+std::cos(_q2))-q0*std::tan(q0/2.0)/2.0;
+}
+
+Real Rayleigh_Benard::SolverType::free_heat_odd(Real _q1, Real _q2)
+{
+	Real q0 = std::sqrt(-_q1*_q1 + _q2*_q2 + 2.0*std::sqrt(3.0)*_q1*_q2);
+	return (_q1*std::sinh(_q1)+_q2*std::sin(_q2))/(std::cosh(_q1)-std::cos(_q2))+q0/std::tan(q0/2.0)/2.0;
 }

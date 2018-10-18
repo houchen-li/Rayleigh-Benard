@@ -15,10 +15,10 @@ int main(int argc, char *argv[])
 	Real a0, a1, h = 1e-6, tol = 1e-8;
 	Uint num, i;
 	Real *a, *data;
-	String file_name, dataset_names[4] = {"/rigid_temp_even", "/rigid_heat_even", "/free_temp_even", "/free_heat_even"};
+	String file_name, dataset_names[8] = {"/rigid_temp_even", "/rigid_temp_odd", "/rigid_heat_even", "/rigid_heat_odd", "/free_temp_even", "/free_temp_odd", "/free_heat_even", "/free_heat_odd"};
 	std::stringstream ss;
 	Rayleigh_Benard::SolverType s;
-	Rayleigh_Benard::ModeType modes[4] = {Rayleigh_Benard::rigid_temp_even, Rayleigh_Benard::rigid_heat_even, Rayleigh_Benard::free_temp_even, Rayleigh_Benard::free_heat_even};
+	Rayleigh_Benard::ModeType modes[8] = {Rayleigh_Benard::rigid_temp_even, Rayleigh_Benard::rigid_temp_odd, Rayleigh_Benard::rigid_heat_even, Rayleigh_Benard::rigid_heat_odd, Rayleigh_Benard::free_temp_even, Rayleigh_Benard::free_temp_odd, Rayleigh_Benard::free_heat_even, Rayleigh_Benard::free_heat_odd};
 	
 	std::srand(std::time(0));
 	try {
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
 	a = linspace(a0, a1, num);
 
-	for (i = 0; i < 4; i++) {
+	for (i = 0; i < 8; i++) {
 		data = genData(a, num, s, modes[i]);
 		dataset = file.createDataSet(dataset_names[i], H5::PredType::NATIVE_DOUBLE, dataspace);
 		dataset.write(data, H5::PredType::NATIVE_DOUBLE);

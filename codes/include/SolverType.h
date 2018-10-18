@@ -5,7 +5,7 @@
 #include "def.h"
 
 namespace Rayleigh_Benard{
-	typedef enum{rigid_temp_even, rigid_heat_even, free_temp_even, free_heat_even} ModeType;
+	typedef enum{rigid_temp_even, rigid_temp_odd, rigid_heat_even, rigid_heat_odd, free_temp_even, free_temp_odd, free_heat_even, free_heat_odd} ModeType;
 	class SolverType
 	{
 	public:
@@ -31,8 +31,11 @@ namespace Rayleigh_Benard{
 	private:
 		void initialize(void);
 		static Real rigid_temp_even(Real _q1, Real _q2);
+		static Real rigid_temp_odd(Real _q1, Real _q2);
 		static Real rigid_heat_even(Real _q1, Real _q2);
+		static Real rigid_heat_odd(Real _q1, Real _q2);
 		static Real free_heat_even(Real _q1, Real _q2);
+		static Real free_heat_odd(Real _q1, Real _q2);
 		Real data_[10];
 	};
 	std::ostream & operator<<(std::ostream &_os, const SolverType &_obj);
